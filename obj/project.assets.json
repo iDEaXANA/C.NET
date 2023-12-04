@@ -8,19 +8,19 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\bilalm\\.nuget\\packages\\": {}
+    "C:\\Users\\bmben\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\bilalm\\Desktop\\Projects\\dotnet-course-code\\HelloWorld\\HelloWorld.csproj",
+      "projectUniqueName": "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\C#.NET\\C.NET\\HelloWorld.csproj",
       "projectName": "HelloWorld",
-      "projectPath": "C:\\Users\\bilalm\\Desktop\\Projects\\dotnet-course-code\\HelloWorld\\HelloWorld.csproj",
-      "packagesPath": "C:\\Users\\bilalm\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\bilalm\\Desktop\\Projects\\dotnet-course-code\\HelloWorld\\obj\\",
+      "projectPath": "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\C#.NET\\C.NET\\HelloWorld.csproj",
+      "packagesPath": "C:\\Users\\bmben\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\C#.NET\\C.NET\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\bilalm\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\bmben\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
