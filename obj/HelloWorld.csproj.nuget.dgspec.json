@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\C#.NET\\C.NET\\HelloWorld.csproj": {}
+    "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\CNET\\C.NET\\HelloWorld.csproj": {}
   },
   "projects": {
-    "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\C#.NET\\C.NET\\HelloWorld.csproj": {
+    "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\CNET\\C.NET\\HelloWorld.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\C#.NET\\C.NET\\HelloWorld.csproj",
+        "projectUniqueName": "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\CNET\\C.NET\\HelloWorld.csproj",
         "projectName": "HelloWorld",
-        "projectPath": "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\C#.NET\\C.NET\\HelloWorld.csproj",
+        "projectPath": "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\CNET\\C.NET\\HelloWorld.csproj",
         "packagesPath": "C:\\Users\\bmben\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\C#.NET\\C.NET\\obj\\",
+        "outputPath": "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\CNET\\C.NET\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\bmben\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -37,6 +37,24 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.1.24, )"
+            },
+            "microsoft.data.sqlclient": {
+              "target": "Package",
+              "version": "[5.1.2, )"
+            },
+            "microsoft.entityframeworkcore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "microsoft.entityframeworkcore.sqlserver": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

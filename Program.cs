@@ -236,32 +236,14 @@
 // Console.WriteLine(totalValue);
 
 using System;
+using System.Data;
 using System.Runtime.CompilerServices;
+using CNET.C.NET.Models;
+using Dapper;
+using Microsoft.Data.SqlClient;
 
-namespace HelloWorld
+namespace CNET.C.NET
 {
-
-    public class Computer {
-        public string Motherboard {get; set;} = "";
-        // private string _motherboard;
-        // private string Motherboard {get{return _motherboard;} set(_motherboard = value;)}
-        public int CPUCores {get; set;} 
-        public bool HasWifi {get; set;}
-        public bool HasLTE {get; set;}
-        public DateTime ReleaseDate {get; set;}
-        public decimal Price {get; set;}
-        public string VideoCard {get; set;} = "";
-
-        //!! Old Way!
-        // public Computer() {
-        //     if (Motherboard == null) {
-        //         Motherboard = "";
-        //     }
-        //     if (VideoCard == null) {
-        //         VideoCard = "";
-        //     }
-        // }
-    }
     internal class Program
     {
         static void Main(string[] args)
@@ -301,20 +283,97 @@ namespace HelloWorld
             //-- Models (Source Mapping), Namespaces, Database Connections (Dapper, Entity Framework), Config
             //!! Methods, Arguments and Return.   
             //* , , the same as JS 
+        //setup
+        string connectionString = "Server=localhost;Database=DotNetCourseDatabase;TrustServerCertificate=true;Trusted_Connection=true";
+        //setup
+        IDbConnection dbConnection = new SqlConnection(connectionString);
 
+
+        string sqlCommand = "SELECT GETDATE()";
+
+        DateTime rightNow = dbConnection.QuerySingle<DateTime>(sqlCommand);
+
+        // Console.WriteLine(rightNow);
+
+        //!! Creating Model
         Computer myComputer = new Computer() {
             Motherboard = "Z690",
+            CPUCores = 4,
             HasWifi = true,
             HasLTE = false,
             ReleaseDate = DateTime.Now,
             Price = 943.87m,
             VideoCard = "RTX 1"
         };
-        Console.WriteLine(myComputer.Motherboard);
-        Console.WriteLine(myComputer);
+        //!! INSERTing into database
+        string sql = @"INSERT INTO TutorialAppSchema.Computer (
+            Motherboard,
+            CPUCores,
+            HasWifi,
+            HasLTE,
+            ReleaseDate,
+            Price,
+            VideoCard
+        ) VALUES ('" 
+        + myComputer.Motherboard
+        + "','" + myComputer.CPUCores
+        + "','" + myComputer.HasWifi
+        + "','" + myComputer.HasLTE
+        + "','" + myComputer.ReleaseDate
+        + "','" + myComputer.Price
+        + "','" + myComputer.VideoCard
+        + "')";
+
+        // Console.WriteLine(sql);
+
+        int result = dbConnection.Execute(sql);
+
+        // Console.WriteLine(result);
+
+        string sqlSelect = @"SELECT 
+            Computer.Motherboard,
+            Computer.CPUCores,
+            Computer.HasWifi,
+            Computer.HasLTE,
+            Computer.ReleaseDate,
+            Computer.Price,
+            Computer.VideoCard
+         FROM TutorialAppSchema.Computer";
+
+         IEnumerable<Computer> computers = dbConnection.Query<Computer>(sqlSelect);
+
+        Console.WriteLine("'Motherboard', 'CPUCores','HasWifi', 'HasLTE, 'ReleaseDate', 'Price', 'VideoCard'");
+
+         foreach(Computer singleComputer in computers) {
+            Console.WriteLine("'" 
+        + myComputer.Motherboard
+        + "','" + myComputer.CPUCores
+        + "','" + myComputer.HasWifi
+        + "','" + myComputer.HasLTE
+        + "','" + myComputer.ReleaseDate
+        + "','" + myComputer.Price
+        + "','" + myComputer.VideoCard
+        + "'");
+         }
+
+        // Console.WriteLine(myComputer.Motherboard);
+        // Console.WriteLine(myComputer);
         }
     }
 }
+
+
+
+// UserName: sa
+
+// Password: SQLConnect1
+
+// For connection strings you will also need to set Trusted_Connection to false and supply a UserName and Password:
+
+
+
+// Server=localhost;Database=DotNetCourseDatabase;Trusted_Connection=false;TrustServerCertificate=True;User Id=sa;Password=SQLConnect1;
+
 
             
 
