@@ -8,6 +8,7 @@ namespace C.NET.Data
     {
         private string _connectionString = "Server=localhost;Database=DotNetCourseDatabase;TrustServerCertificate=true;Trusted_Connection=true";
         
+        // For extracting table values
         public IEnumerable<T> LoadData<T>(string sql) 
         {
         IDbConnection dbConnection = new SqlConnection(_connectionString);
@@ -19,6 +20,7 @@ namespace C.NET.Data
             return dbConnection.QuerySingle<T>(sql);  
         }
 
+        // For INSERT/UPDATE/DELETE
         public bool ExecuteSql(string sql) 
         {
             IDbConnection dbConnection = new SqlConnection(_connectionString);
