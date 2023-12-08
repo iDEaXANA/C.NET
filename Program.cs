@@ -238,6 +238,7 @@
 using System;
 using System.Data;
 using System.Runtime.CompilerServices;
+using C.NET.Data;
 using CNET.C.NET.Models;
 using Dapper;
 using Microsoft.Data.SqlClient;
@@ -283,15 +284,14 @@ namespace CNET.C.NET
             //-- Models (Source Mapping), Namespaces, Database Connections (Dapper, Entity Framework), Config
             //!! Methods, Arguments and Return.   
             //* , , the same as JS 
-        //setup
-        string connectionString = "Server=localhost;Database=DotNetCourseDatabase;TrustServerCertificate=true;Trusted_Connection=true";
-        //setup
-        IDbConnection dbConnection = new SqlConnection(connectionString);
+        
+        DataContextDapper dapper = new DataContextDapper();
+        
 
 
         string sqlCommand = "SELECT GETDATE()";
 
-        DateTime rightNow = dbConnection.QuerySingle<DateTime>(sqlCommand);
+        DateTime rightNow = dapper.LoadDataSingle<DateTime>(sqlCommand);
 
         // Console.WriteLine(rightNow);
 
@@ -326,7 +326,8 @@ namespace CNET.C.NET
 
         // Console.WriteLine(sql);
 
-        int result = dbConnection.Execute(sql);
+        // int result = dapper.ExecuteSqlWithRows(sql);
+        bool result = dapper.ExecuteSql(sql);
 
         // Console.WriteLine(result);
 
@@ -340,7 +341,7 @@ namespace CNET.C.NET
             Computer.VideoCard
          FROM TutorialAppSchema.Computer";
 
-         IEnumerable<Computer> computers = dbConnection.Query<Computer>(sqlSelect);
+         IEnumerable<Computer> computers = dapper.LoadData<Computer>(sqlSelect);
 
         Console.WriteLine("'Motherboard', 'CPUCores','HasWifi', 'HasLTE, 'ReleaseDate', 'Price', 'VideoCard'");
 
