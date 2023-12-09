@@ -19,7 +19,9 @@ namespace C.NET.Data
         {
             modelBuilder.HasDefaultSchema("TutorialAppSchema");
 
-            modelBuilder.Entity<Computer>();
+            modelBuilder.Entity<Computer>()
+                // .HasNoKey()
+                .HasKey(c => c.ComputerId);
                 // .ToTable("TableName", "SchemaName");
                 //- .ToTable("Computer", "TutorialAppSchema");
         }

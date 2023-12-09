@@ -1,6 +1,7 @@
 namespace CNET.C.NET.Models {
 
     public class Computer {
+        public int ComputerId {get; set;}
         public string Motherboard {get; set;} = "";
         // private string _motherboard;
         // private string Motherboard {get{return _motherboard;} set(_motherboard = value;)}

@@ -336,6 +336,7 @@ namespace CNET.C.NET
         // Console.WriteLine(result);
 
         string sqlSelect = @"SELECT 
+            Computer.ComputerId,
             Computer.Motherboard,
             Computer.CPUCores,
             Computer.HasWifi,
@@ -347,19 +348,42 @@ namespace CNET.C.NET
 
          IEnumerable<Computer> computers = dapper.LoadData<Computer>(sqlSelect);
 
-        Console.WriteLine("'Motherboard', 'CPUCores','HasWifi', 'HasLTE, 'ReleaseDate', 'Price', 'VideoCard'");
+        Console.WriteLine("'ComputerId', 'Motherboard', 'CPUCores','HasWifi', 'HasLTE, 'ReleaseDate', 'Price', 'VideoCard'");
 
          foreach(Computer singleComputer in computers) {
             Console.WriteLine("'" 
-        + myComputer.Motherboard
-        + "','" + myComputer.CPUCores
-        + "','" + myComputer.HasWifi
-        + "','" + myComputer.HasLTE
-        + "','" + myComputer.ReleaseDate
-        + "','" + myComputer.Price
-        + "','" + myComputer.VideoCard
-        + "'");
+                + singleComputer.ComputerId
+                + "','"  + singleComputer.Motherboard
+                + "','" + singleComputer.CPUCores
+                + "','" + singleComputer.HasWifi
+                + "','" + singleComputer.HasLTE
+                + "','" + singleComputer.ReleaseDate
+                + "','" + singleComputer.Price
+                + "','" + singleComputer.VideoCard
+                + "'");
          }
+
+        IEnumerable<Computer>? computersEF = entityFramework.Computer?.ToList<Computer>();
+
+        if (computersEF != null)
+        {
+        Console.WriteLine("'ComputerId', 'Motherboard', 'CPUCores','HasWifi', 'HasLTE, 'ReleaseDate', 'Price', 'VideoCard'");
+
+        foreach(Computer singleComputer in computers) {
+            Console.WriteLine("'" 
+                + singleComputer.ComputerId
+                + "','"  + singleComputer.Motherboard
+                + "','" + singleComputer.CPUCores
+                + "','" + singleComputer.HasWifi
+                + "','" + singleComputer.HasLTE
+                + "','" + singleComputer.ReleaseDate
+                + "','" + singleComputer.Price
+                + "','" + singleComputer.VideoCard
+                + "'");
+         }
+        }
+
+        
 
         // Console.WriteLine(myComputer.Motherboard);
         // Console.WriteLine(myComputer);
