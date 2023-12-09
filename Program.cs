@@ -287,11 +287,10 @@ namespace CNET.C.NET
         
         DataContextDapper dapper = new DataContextDapper();
         
+        DataContextEF entityFramework = new DataContextEF();
 
-
-        string sqlCommand = "SELECT GETDATE()";
-
-        DateTime rightNow = dapper.LoadDataSingle<DateTime>(sqlCommand);
+        // string sqlCommand = "SELECT GETDATE()";
+        // DateTime rightNow = dapper.LoadDataSingle<DateTime>(sqlCommand);
 
         // Console.WriteLine(rightNow);
 
@@ -305,6 +304,11 @@ namespace CNET.C.NET
             Price = 943.87m,
             VideoCard = "RTX 1"
         };
+
+        entityFramework.Add(myComputer);
+        entityFramework.SaveChanges();
+
+
         //!! INSERTing into database
         string sql = @"INSERT INTO TutorialAppSchema.Computer (
             Motherboard,
