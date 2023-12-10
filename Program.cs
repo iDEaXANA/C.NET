@@ -242,6 +242,7 @@ using C.NET.Data;
 using CNET.C.NET.Models;
 using Dapper;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace CNET.C.NET
 {
@@ -284,10 +285,14 @@ namespace CNET.C.NET
             //-- Models (Source Mapping), Namespaces, Database Connections (Dapper, Entity Framework), Config
             //!! Methods, Arguments and Return.   
             //* , , the same as JS 
+
+        IConfiguration config = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .Build();
+
         
-        DataContextDapper dapper = new DataContextDapper();
-        
-        DataContextEF entityFramework = new DataContextEF();
+        DataContextDapper dapper = new DataContextDapper(config);
+        DataContextEF entityFramework = new DataContextEF(config);
 
         // string sqlCommand = "SELECT GETDATE()";
         // DateTime rightNow = dapper.LoadDataSingle<DateTime>(sqlCommand);
