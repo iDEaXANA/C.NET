@@ -238,11 +238,13 @@
 using System;
 using System.Data;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using C.NET.Data;
 using CNET.C.NET.Models;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace CNET.C.NET
 {
@@ -292,7 +294,8 @@ namespace CNET.C.NET
 
         
         DataContextDapper dapper = new DataContextDapper(config);
-        DataContextEF entityFramework = new DataContextEF(config);
+        
+        // DataContextEF entityFramework = new DataContextEF(config);
 
         // string sqlCommand = "SELECT GETDATE()";
         // DateTime rightNow = dapper.LoadDataSingle<DateTime>(sqlCommand);
@@ -300,102 +303,130 @@ namespace CNET.C.NET
         // Console.WriteLine(rightNow);
 
         //!! Creating Model
-        Computer myComputer = new Computer() {
-            Motherboard = "Z690",
-            CPUCores = 4,
-            HasWifi = true,
-            HasLTE = false,
-            ReleaseDate = DateTime.Now,
-            Price = 943.87m,
-            VideoCard = "RTX 1"
-        };
+        // Computer myComputer = new Computer() {
+        //     Motherboard = "Z690",
+        //     CPUCores = 4,
+        //     HasWifi = true,
+        //     HasLTE = false,
+        //     ReleaseDate = DateTime.Now,
+        //     Price = 943.87m,
+        //     VideoCard = "RTX 1"
+        // };
 
-        entityFramework.Add(myComputer);
-        entityFramework.SaveChanges();
+        // entityFramework.Add(myComputer);
+        // entityFramework.SaveChanges();
 
 
         //!! INSERTing into database
-        string sql = @"INSERT INTO TutorialAppSchema.Computer (
-            Motherboard,
-            CPUCores,
-            HasWifi,
-            HasLTE,
-            ReleaseDate,
-            Price,
-            VideoCard
-        ) VALUES ('" 
-        + myComputer.Motherboard
-        + "','" + myComputer.CPUCores
-        + "','" + myComputer.HasWifi
-        + "','" + myComputer.HasLTE
-        + "','" + myComputer.ReleaseDate
-        + "','" + myComputer.Price
-        + "','" + myComputer.VideoCard
-        + "')";
-
-        // Console.WriteLine(sql);
-
-        // int result = dapper.ExecuteSqlWithRows(sql);
-        bool result = dapper.ExecuteSql(sql);
-
-        // Console.WriteLine(result);
-
-        string sqlSelect = @"SELECT 
-            Computer.ComputerId,
-            Computer.Motherboard,
-            Computer.CPUCores,
-            Computer.HasWifi,
-            Computer.HasLTE,
-            Computer.ReleaseDate,
-            Computer.Price,
-            Computer.VideoCard
-         FROM TutorialAppSchema.Computer";
-
-         IEnumerable<Computer> computers = dapper.LoadData<Computer>(sqlSelect);
-
-        Console.WriteLine("'ComputerId', 'Motherboard', 'CPUCores','HasWifi', 'HasLTE, 'ReleaseDate', 'Price', 'VideoCard'");
-
-         foreach(Computer singleComputer in computers) {
-            Console.WriteLine("'" 
-                + singleComputer.ComputerId
-                + "','"  + singleComputer.Motherboard
-                + "','" + singleComputer.CPUCores
-                + "','" + singleComputer.HasWifi
-                + "','" + singleComputer.HasLTE
-                + "','" + singleComputer.ReleaseDate
-                + "','" + singleComputer.Price
-                + "','" + singleComputer.VideoCard
-                + "'");
-         }
-
-        IEnumerable<Computer>? computersEF = entityFramework.Computer?.ToList<Computer>();
-
-        if (computersEF != null)
-        {
-        Console.WriteLine("'ComputerId', 'Motherboard', 'CPUCores','HasWifi', 'HasLTE, 'ReleaseDate', 'Price', 'VideoCard'");
-
-        foreach(Computer singleComputer in computers) {
-            Console.WriteLine("'" 
-                + singleComputer.ComputerId
-                + "','"  + singleComputer.Motherboard
-                + "','" + singleComputer.CPUCores
-                + "','" + singleComputer.HasWifi
-                + "','" + singleComputer.HasLTE
-                + "','" + singleComputer.ReleaseDate
-                + "','" + singleComputer.Price
-                + "','" + singleComputer.VideoCard
-                + "'");
-         }
-        }
-
+        // string sql = @"INSERT INTO TutorialAppSchema.Computer (
+        //     Motherboard,
+        //     CPUCores,
+        //     HasWifi,
+        //     HasLTE,
+        //     ReleaseDate,
+        //     Price,
+        //     VideoCard
+        // ) VALUES ('" 
+        // + myComputer.Motherboard
+        // + "','" + myComputer.CPUCores
+        // + "','" + myComputer.HasWifi
+        // + "','" + myComputer.HasLTE
+        // + "','" + myComputer.ReleaseDate
+        // + "','" + myComputer.Price
+        // + "','" + myComputer.VideoCard
+        // + "')";
         
+        // File.WriteAllText("log.txt", "\n" + sql + "\n");
 
-        // Console.WriteLine(myComputer.Motherboard);
-        // Console.WriteLine(myComputer);
+        // using StreamWriter openFile = new("log.txt", append: true);
+        // openFile.WriteLine("\n" + sql + "\n");
+
+        // openFile.Close();
+
+        string computersJson = File.ReadAllText("Computers.json");
+
+        // Console.WriteLine(computersJson);
+
+        // JsonSerializerOptions options = new JsonSerializerOptions()
+        // {
+        //     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        // };
+
+        // IEnumerable<Computer>? computers = JsonSerializer.Deserialize<IEnumerable<Computer>>(computersJson, options);
+
+         IEnumerable<Computer>? computers = JsonConvert.DeserializeObject<IEnumerable<Computer>>(computersJson);
+
+        if (computers != null) 
+        {
+            foreach (Computer computer in computers)
+            {
+                Console.Write("\n" + computer.Motherboard + "\n");
+            }
+        }
         }
     }
 }
 
+
+// Console.WriteLine(sql);
+
+        // // int result = dapper.ExecuteSqlWithRows(sql);
+        // bool result = dapper.ExecuteSql(sql);
+
+        // // Console.WriteLine(result);
+
+        // string sqlSelect = @"SELECT 
+        //     Computer.ComputerId,
+        //     Computer.Motherboard,
+        //     Computer.CPUCores,
+        //     Computer.HasWifi,
+        //     Computer.HasLTE,
+        //     Computer.ReleaseDate,
+        //     Computer.Price,
+        //     Computer.VideoCard
+        //  FROM TutorialAppSchema.Computer";
+
+        //  IEnumerable<Computer> computers = dapper.LoadData<Computer>(sqlSelect);
+
+        // Console.WriteLine("'ComputerId', 'Motherboard', 'CPUCores','HasWifi', 'HasLTE, 'ReleaseDate', 'Price', 'VideoCard'");
+
+        //  foreach(Computer singleComputer in computers) {
+        //     Console.WriteLine("'" 
+        //         + singleComputer.ComputerId
+        //         + "','"  + singleComputer.Motherboard
+        //         + "','" + singleComputer.CPUCores
+        //         + "','" + singleComputer.HasWifi
+        //         + "','" + singleComputer.HasLTE
+        //         + "','" + singleComputer.ReleaseDate
+        //         + "','" + singleComputer.Price
+        //         + "','" + singleComputer.VideoCard
+        //         + "'");
+        //  }
+
+        // IEnumerable<Computer>? computersEF = entityFramework.Computer?.ToList<Computer>();
+
+        // if (computersEF != null)
+        // {
+        // Console.WriteLine("'ComputerId', 'Motherboard', 'CPUCores','HasWifi', 'HasLTE, 'ReleaseDate', 'Price', 'VideoCard'");
+
+        // foreach(Computer singleComputer in computers) {
+        //     Console.WriteLine("'" 
+        //         + singleComputer.ComputerId
+        //         + "','"  + singleComputer.Motherboard
+        //         + "','" + singleComputer.CPUCores
+        //         + "','" + singleComputer.HasWifi
+        //         + "','" + singleComputer.HasLTE
+        //         + "','" + singleComputer.ReleaseDate
+        //         + "','" + singleComputer.Price
+        //         + "','" + singleComputer.VideoCard
+        //         + "'");
+        //  }
+        // }
+
+        
+
+        // // Console.WriteLine(myComputer.Motherboard);
+        // // Console.WriteLine(myComputer);
 
 
 // UserName: sa
