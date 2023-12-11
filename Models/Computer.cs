@@ -5,7 +5,7 @@ namespace CNET.C.NET.Models {
         public string Motherboard {get; set;} = "";
         // private string _motherboard;
         // private string Motherboard {get{return _motherboard;} set(_motherboard = value;)}
-        public int CPUCores {get; set;} 
+        public int? CPUCores {get; set;} 
         public bool HasWifi {get; set;}
         public bool HasLTE {get; set;}
         public DateTime? ReleaseDate {get; set;}

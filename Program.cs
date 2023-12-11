@@ -245,6 +245,9 @@ using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+// using System.Text.RegularExpressions;
+// using System.Globalization;
 
 namespace CNET.C.NET
 {
@@ -347,22 +350,62 @@ namespace CNET.C.NET
 
         // Console.WriteLine(computersJson);
 
-        // JsonSerializerOptions options = new JsonSerializerOptions()
-        // {
-        //     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        // };
-
-        // IEnumerable<Computer>? computers = JsonSerializer.Deserialize<IEnumerable<Computer>>(computersJson, options);
-
-         IEnumerable<Computer>? computers = JsonConvert.DeserializeObject<IEnumerable<Computer>>(computersJson);
-
-        if (computers != null) 
+        JsonSerializerOptions options = new JsonSerializerOptions()
         {
-            foreach (Computer computer in computers)
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+
+        IEnumerable<Computer>? computersNewtonSoft = JsonConvert.DeserializeObject<IEnumerable<Computer>>(computersJson)
+        ;
+        IEnumerable<Computer>? computersSystem = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<Computer>>(computersJson, options);
+
+
+        if (computersNewtonSoft != null) 
+        {
+            foreach (Computer computer in computersNewtonSoft)
             {
-                Console.Write("\n" + computer.Motherboard + "\n");
+                // Console.Write("\n" + computer.Motherboard + "\n");
+                    string sql = @"INSERT INTO TutorialAppSchema.Computer (
+                    Motherboard,
+                    HasWifi,
+                    HasLTE,
+                    ReleaseDate,
+                    Price,
+                    VideoCard
+                ) VALUES ('" 
+                + EscapeSingleQuote(computer.Motherboard)
+                // + "','" + computer.CPUCores
+                + "','" + computer.HasWifi
+                + "','" + computer.HasLTE
+                + "','" + computer.ReleaseDate
+                + "','" + computer.Price
+                + "','" + EscapeSingleQuote(computer.VideoCard)
+                + "')";
+        
+                dapper.ExecuteSql(sql);
             }
         }
+
+        JsonSerializerSettings settings = new JsonSerializerSettings() 
+        {
+            ContractResolver = new CamelCasePropertyNamesContractResolver()
+        };
+
+        string computersCopyNewtonsoft = JsonConvert.SerializeObject(computersNewtonSoft, settings);
+
+        File.WriteAllText("computersCopyNewtonsoft.txt", computersCopyNewtonsoft);
+
+        string computersCopySystem = System.Text.Json.JsonSerializer.Serialize(computersSystem, options);
+
+        File.WriteAllText("computersCopySystem.txt", computersCopySystem);
+
+        }
+
+        static string EscapeSingleQuote(string input)
+        {
+            string output = input.Replace("'", "''");
+
+            return output;
         }
     }
 }
