@@ -262,6 +262,7 @@ namespace CNET.C.NET
             //     //-- Methods
             //     //!! Methods, Arguments and Return.   
             //     //* MOSTLY the same as JS  
+            
 
             
             //     int totalValue = 0;
@@ -307,7 +308,9 @@ namespace CNET.C.NET
 
             // Console.WriteLine(rightNow);
 
-            //!! Creating Model
+            //!! Creating instance of Model
+            // myComputer.ReleaseDate.ToString("yyyy-MM-dd");
+            
             // Computer myComputer = new Computer() {
             //     Motherboard = "Z690",
             //     CPUCores = 4,
