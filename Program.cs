@@ -237,6 +237,7 @@
 
 using System;
 using System.Data;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using C.NET.Data;
@@ -364,6 +365,13 @@ namespace CNET.C.NET
         {
             foreach (Computer computer in computersNewtonSoft)
             {
+
+                 if (!string.IsNullOrEmpty(computer.ReleaseDate))
+        {
+            // Convert ReleaseDate to DateTime and then to a string in a format SQL Server understands
+            computer.ReleaseDate = DateTime.Parse(computer.ReleaseDate, CultureInfo.InvariantCulture).ToString("yyyy-MM-dd HH:mm:ss.fff");
+        }
+                
                 // Console.Write("\n" + computer.Motherboard + "\n");
                     string sql = @"INSERT INTO TutorialAppSchema.Computer (
                     Motherboard,
