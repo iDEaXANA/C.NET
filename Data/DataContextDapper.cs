@@ -13,7 +13,7 @@ namespace C.NET.Data
         public DataContextDapper(IConfiguration config) 
         {
             // _config = config;
-            _connectionString = config.GetConnectionString("DefaultConnection");
+            _connectionString = config.GetConnectionString("DefaultConnection")!;
         }
         
         // For extracting table values

@@ -240,6 +240,7 @@ using System.Data;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
+using AutoMapper;
 using C.NET.Data;
 using CNET.C.NET.Models;
 using Dapper;
@@ -247,176 +248,191 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-// using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 // using System.Globalization;
 
 namespace CNET.C.NET
 {
-    internal class Program
-    {
-        static void Main(string[] args)
+        internal class Program
         {
-        //     Console.WriteLine("Hello World");
-
-        //     //-- Methods
-        //     //!! Methods, Arguments and Return.   
-        //     //* MOSTLY the same as JS  
-
-        
-        //     int totalValue = 0;
-        //     int[] intsToCompress = new int[] {10, 15, 20, 25, 30, 12, 34};
-        //     int[] intsToCompress2 = new int[] {23, 23, 53, 56, 83, 92};
-        //     DateTime startTime = DateTime.Now;
-        //     totalValue = GetSum(intsToCompress);
-        //     Console.WriteLine(totalValue);
-        //     Console.WriteLine((DateTime.Now - startTime).TotalSeconds);
-        //     totalValue = GetSum(intsToCompress2);
-        //     Console.WriteLine(totalValue);
-        //     Console.WriteLine((DateTime.Now - startTime).TotalSeconds);
-            
-        //     //-- Scope
-        //     //!! Scope.
-        //     //* MOSTLY the same as JS  
-            
-        
-        // }
-        //     static private int GetSum(int[] array) {
-            
-        //     int totalValue = 0;
-        //     foreach(int intForCompression in array) {
-        //         totalValue += intForCompression;
-        //     }
-        //     return totalValue;
-        // }
-            //-- Models (Source Mapping), Namespaces, Database Connections (Dapper, Entity Framework), Config
-            //!! Methods, Arguments and Return.   
-            //* , , the same as JS 
-
-        IConfiguration config = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
-            .Build();
-
-        
-        DataContextDapper dapper = new DataContextDapper(config);
-        
-        // DataContextEF entityFramework = new DataContextEF(config);
-
-        // string sqlCommand = "SELECT GETDATE()";
-        // DateTime rightNow = dapper.LoadDataSingle<DateTime>(sqlCommand);
-
-        // Console.WriteLine(rightNow);
-
-        //!! Creating Model
-        // Computer myComputer = new Computer() {
-        //     Motherboard = "Z690",
-        //     CPUCores = 4,
-        //     HasWifi = true,
-        //     HasLTE = false,
-        //     ReleaseDate = DateTime.Now,
-        //     Price = 943.87m,
-        //     VideoCard = "RTX 1"
-        // };
-
-        // entityFramework.Add(myComputer);
-        // entityFramework.SaveChanges();
-
-
-        //!! INSERTing into database
-        // string sql = @"INSERT INTO TutorialAppSchema.Computer (
-        //     Motherboard,
-        //     CPUCores,
-        //     HasWifi,
-        //     HasLTE,
-        //     ReleaseDate,
-        //     Price,
-        //     VideoCard
-        // ) VALUES ('" 
-        // + myComputer.Motherboard
-        // + "','" + myComputer.CPUCores
-        // + "','" + myComputer.HasWifi
-        // + "','" + myComputer.HasLTE
-        // + "','" + myComputer.ReleaseDate
-        // + "','" + myComputer.Price
-        // + "','" + myComputer.VideoCard
-        // + "')";
-        
-        // File.WriteAllText("log.txt", "\n" + sql + "\n");
-
-        // using StreamWriter openFile = new("log.txt", append: true);
-        // openFile.WriteLine("\n" + sql + "\n");
-
-        // openFile.Close();
-
-        string computersJson = File.ReadAllText("Computers.json");
-
-        // Console.WriteLine(computersJson);
-
-        JsonSerializerOptions options = new JsonSerializerOptions()
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        };
-
-        IEnumerable<Computer>? computersNewtonSoft = JsonConvert.DeserializeObject<IEnumerable<Computer>>(computersJson)
-        ;
-        IEnumerable<Computer>? computersSystem = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<Computer>>(computersJson, options);
-
-
-        if (computersNewtonSoft != null) 
-        {
-            foreach (Computer computer in computersNewtonSoft)
+            static void Main(string[] args)
             {
+            //     Console.WriteLine("Hello World");
 
-                 if (!string.IsNullOrEmpty(computer.ReleaseDate))
-        {
-            // Convert ReleaseDate to DateTime and then to a string in a format SQL Server understands
-            computer.ReleaseDate = DateTime.Parse(computer.ReleaseDate, CultureInfo.InvariantCulture).ToString("yyyy-MM-dd HH:mm:ss.fff");
-        }
+            //     //-- Methods
+            //     //!! Methods, Arguments and Return.   
+            //     //* MOSTLY the same as JS  
+
+            
+            //     int totalValue = 0;
+            //     int[] intsToCompress = new int[] {10, 15, 20, 25, 30, 12, 34};
+            //     int[] intsToCompress2 = new int[] {23, 23, 53, 56, 83, 92};
+            //     DateTime startTime = DateTime.Now;
+            //     totalValue = GetSum(intsToCompress);
+            //     Console.WriteLine(totalValue);
+            //     Console.WriteLine((DateTime.Now - startTime).TotalSeconds);
+            //     totalValue = GetSum(intsToCompress2);
+            //     Console.WriteLine(totalValue);
+            //     Console.WriteLine((DateTime.Now - startTime).TotalSeconds);
                 
-                // Console.Write("\n" + computer.Motherboard + "\n");
-                    string sql = @"INSERT INTO TutorialAppSchema.Computer (
-                    Motherboard,
-                    HasWifi,
-                    HasLTE,
-                    ReleaseDate,
-                    Price,
-                    VideoCard
-                ) VALUES ('" 
-                + EscapeSingleQuote(computer.Motherboard)
-                // + "','" + computer.CPUCores
-                + "','" + computer.HasWifi
-                + "','" + computer.HasLTE
-                + "','" + computer.ReleaseDate
-                + "','" + computer.Price
-                + "','" + EscapeSingleQuote(computer.VideoCard)
-                + "')";
-        
-                dapper.ExecuteSql(sql);
-            }
+            //     //-- Scope
+            //     //!! Scope.
+            //     //* MOSTLY the same as JS  
+                
+            
+            // }
+            //     static private int GetSum(int[] array) {
+                
+            //     int totalValue = 0;
+            //     foreach(int intForCompression in array) {
+            //         totalValue += intForCompression;
+            //     }
+            //     return totalValue;
+            // }
+                //-- Models (Source Mapping), Namespaces, Database Connections (Dapper, Entity Framework), Config
+                //!! Methods, Arguments and Return.   
+                //* , , the same as JS 
+
+            IConfiguration config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            
+            DataContextDapper dapper = new DataContextDapper(config);
+            
+            // DataContextEF entityFramework = new DataContextEF(config);
+
+            // string sqlCommand = "SELECT GETDATE()";
+            // DateTime rightNow = dapper.LoadDataSingle<DateTime>(sqlCommand);
+
+            // Console.WriteLine(rightNow);
+
+            //!! Creating Model
+            // Computer myComputer = new Computer() {
+            //     Motherboard = "Z690",
+            //     CPUCores = 4,
+            //     HasWifi = true,
+            //     HasLTE = false,
+            //     ReleaseDate = DateTime.Now,
+            //     Price = 943.87m,
+            //     VideoCard = "RTX 1"
+            // };
+
+            // entityFramework.Add(myComputer);
+            // entityFramework.SaveChanges();
+
+
+            //!! INSERTing into database
+            // string sql = @"INSERT INTO TutorialAppSchema.Computer (
+            //     Motherboard,
+            //     CPUCores,
+            //     HasWifi,
+            //     HasLTE,
+            //     ReleaseDate,
+            //     Price,
+            //     VideoCard
+            // ) VALUES ('" 
+            // + myComputer.Motherboard
+            // + "','" + myComputer.CPUCores
+            // + "','" + myComputer.HasWifi
+            // + "','" + myComputer.HasLTE
+            // + "','" + myComputer.ReleaseDate
+            // + "','" + myComputer.Price
+            // + "','" + myComputer.VideoCard
+            // + "')";
+            
+            // File.WriteAllText("log.txt", "\n" + sql + "\n");
+
+            // using StreamWriter openFile = new("log.txt", append: true);
+            // openFile.WriteLine("\n" + sql + "\n");
+
+            // openFile.Close();
+
+            string computersJson = File.ReadAllText("ComputersSnake.json");
+
+            Mapper mapper = new Mapper(new MapperConfiguration((cfg) => {
+                cfg.CreateMap<ComputerSnake, Computer>()
+                    .ForMember(destination => destination.ComputerId, options => options.MapFrom(source => source.computer_id))
+                    .ForMember(destination => destination.CPUCores, options => options.MapFrom(source => source.cpu_cores))
+                    .ForMember(destination => destination.HasLTE, options => options.MapFrom(source => source.has_lte))
+                    .ForMember(destination => destination.HasWifi, options => options.MapFrom(source => source.has_wifi))
+                    .ForMember(destination => destination.Motherboard, options => options.MapFrom(source => source.motherboard))
+                    .ForMember(destination => destination.VideoCard, options => options.MapFrom(source => source.video_card))
+                    .ForMember(destination => destination.Price, options => options.MapFrom(source => source.price));
+            }));
+
+            // Console.WriteLine(computersJson);
+
+            // JsonSerializerOptions options = new JsonSerializerOptions()
+            // {
+            //     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            // };
+
+            // IEnumerable<Computer>? computersNewtonSoft = JsonConvert.DeserializeObject<IEnumerable<Computer>>(computersJson)
+            // ;
+            IEnumerable<ComputerSnake>? computersSystem = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<ComputerSnake>>(computersJson);
+
+
+            // if (computersNewtonSoft != null) 
+            // {
+            //     foreach (Computer computer in computersNewtonSoft)
+            //     {
+
+            //          if (!string.IsNullOrEmpty(computer.ReleaseDate))
+            // {
+            //     // Convert ReleaseDate to DateTime and then to a string in a format SQL Server understands
+            //     computer.ReleaseDate = DateTime.Parse(computer.ReleaseDate, CultureInfo.InvariantCulture).ToString("yyyy-MM-dd HH:mm:ss.fff");
+            // }
+                    
+            //         // Console.Write("\n" + computer.Motherboard + "\n");
+            //             string sql = @"INSERT INTO TutorialAppSchema.Computer (
+            //             Motherboard,
+            //             HasWifi,
+            //             HasLTE,
+            //             ReleaseDate,
+            //             Price,
+            //             VideoCard
+            //         ) VALUES ('" 
+            //         + EscapeSingleQuote(computer.Motherboard)
+            //         // + "','" + computer.CPUCores
+            //         + "','" + computer.HasWifi
+            //         + "','" + computer.HasLTE
+            //         + "','" + computer.ReleaseDate
+            //         + "','" + computer.Price
+            //         + "','" + EscapeSingleQuote(computer.VideoCard)
+            //         + "')";
+            
+            //         dapper.ExecuteSql(sql);
+            //     }
+            // }
+
+            // JsonSerializerSettings settings = new JsonSerializerSettings() 
+            // {
+            //     ContractResolver = new CamelCasePropertyNamesContractResolver()
+            // };
+
+            // string computersCopyNewtonsoft = JsonConvert.SerializeObject(computersNewtonSoft, settings);
+
+            // File.WriteAllText("computersCopyNewtonsoft.txt", computersCopyNewtonsoft);
+
+            // string computersCopySystem = System.Text.Json.JsonSerializer.Serialize(computersSystem, options);
+
+            // File.WriteAllText("computersCopySystem.txt", computersCopySystem);
+
+            // }
+
+            
         }
-
-        JsonSerializerSettings settings = new JsonSerializerSettings() 
-        {
-            ContractResolver = new CamelCasePropertyNamesContractResolver()
-        };
-
-        string computersCopyNewtonsoft = JsonConvert.SerializeObject(computersNewtonSoft, settings);
-
-        File.WriteAllText("computersCopyNewtonsoft.txt", computersCopyNewtonsoft);
-
-        string computersCopySystem = System.Text.Json.JsonSerializer.Serialize(computersSystem, options);
-
-        File.WriteAllText("computersCopySystem.txt", computersCopySystem);
-
-        }
-
         static string EscapeSingleQuote(string input)
-        {
-            string output = input.Replace("'", "''");
+            {
+                string output = input.Replace("'", "''");
 
-            return output;
-        }
+                return output;
+            }
     }
 }
+
+
 
 
 // Console.WriteLine(sql);
