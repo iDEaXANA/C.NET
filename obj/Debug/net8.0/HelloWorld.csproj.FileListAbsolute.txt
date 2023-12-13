@@ -100,3 +100,4 @@ C:\Users\bmben\Desktop\Multiverse Zoom\Projects\CNET\C.NET\bin\Debug\net8.0\Micr
 C:\Users\bmben\Desktop\Multiverse Zoom\Projects\CNET\C.NET\bin\Debug\net8.0\Microsoft.Extensions.FileSystemGlobbing.dll
 C:\Users\bmben\Desktop\Multiverse Zoom\Projects\CNET\C.NET\bin\Debug\net8.0\appsettings.json
 C:\Users\bmben\Desktop\Multiverse Zoom\Projects\CNET\C.NET\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\bmben\Desktop\Multiverse Zoom\Projects\CNET\C.NET\bin\Debug\net8.0\AutoMapper.dll

@@ -375,6 +375,15 @@ namespace CNET.C.NET
             // ;
             IEnumerable<ComputerSnake>? computersSystem = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<ComputerSnake>>(computersJson);
 
+            if (computersSystem != null)
+            {
+                IEnumerable<Computer> computerResult = mapper.Map<IEnumerable<Computer>>(computersSystem);
+
+                foreach (Computer computer in computerResult) {
+                    Console.WriteLine(computer.Motherboard);
+                }
+            }
+
 
             // if (computersNewtonSoft != null) 
             // {
