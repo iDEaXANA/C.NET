@@ -373,15 +373,28 @@ namespace CNET.C.NET
 
             // IEnumerable<Computer>? computersNewtonSoft = JsonConvert.DeserializeObject<IEnumerable<Computer>>(computersJson)
             // ;
+            //-- AutoMapper.
             IEnumerable<ComputerSnake>? computersSystem = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<ComputerSnake>>(computersJson);
 
             if (computersSystem != null)
             {
                 IEnumerable<Computer> computerResult = mapper.Map<IEnumerable<Computer>>(computersSystem);
+                Console.WriteLine("Automapper Count: " + computerResult.Count());
+                // foreach (Computer computer in computerResult) 
+                // {
+                //     Console.WriteLine(computer.Motherboard);
+                // }
+            }
 
-                foreach (Computer computer in computerResult) {
-                    Console.WriteLine(computer.Motherboard);
-                }
+            IEnumerable<Computer>? computersSystemJsonPropertMapping = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<Computer>>(computersJson);
+
+            if (computersSystemJsonPropertMapping != null)
+            {
+                Console.WriteLine("JSON Property Count: " + computersSystemJsonPropertMapping.Count());
+                // foreach (Computer computer in computersSystemJsonPropertMapping) 
+                // {
+                //     Console.WriteLine(computer.Motherboard);
+                // }
             }
 
 
