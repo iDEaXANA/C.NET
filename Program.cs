@@ -426,7 +426,8 @@ namespace CNET.C.NET
             //         + "','" + computer.Price
             //         + "','" + EscapeSingleQuote(computer.VideoCard)
             //         + "')";
-            
+            // // + "','" + myComputer.ReleaseDate.ToString("yyyy-MM-dd")
+            // //         + "','" + myComputer.Price.ToString("0.00", CultureInfo.InvariantCulture)
             //         dapper.ExecuteSql(sql);
             //     }
             // }
