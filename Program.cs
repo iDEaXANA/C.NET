@@ -253,18 +253,18 @@ using System.Text.RegularExpressions;
 
 namespace CNET.C.NET
 {
-        internal class Program
+    internal class Program
+    {
+        static async Task Main(string[] args)
         {
-            static void Main(string[] args)
-            {
             //     Console.WriteLine("Hello World");
 
             //     //-- Methods
             //     //!! Methods, Arguments and Return.   
             //     //* MOSTLY the same as JS  
-            
 
-            
+
+
             //     int totalValue = 0;
             //     int[] intsToCompress = new int[] {10, 15, 20, 25, 30, 12, 34};
             //     int[] intsToCompress2 = new int[] {23, 23, 53, 56, 83, 92};
@@ -275,32 +275,32 @@ namespace CNET.C.NET
             //     totalValue = GetSum(intsToCompress2);
             //     Console.WriteLine(totalValue);
             //     Console.WriteLine((DateTime.Now - startTime).TotalSeconds);
-                
+
             //     //-- Scope
             //     //!! Scope.
             //     //* MOSTLY the same as JS  
-                
-            
+
+
             // }
             //     static private int GetSum(int[] array) {
-                
+
             //     int totalValue = 0;
             //     foreach(int intForCompression in array) {
             //         totalValue += intForCompression;
             //     }
             //     return totalValue;
             // }
-                //-- Models (Source Mapping), Namespaces, Database Connections (Dapper, Entity Framework), Config
-                //!! Methods, Arguments and Return.   
-                //* , , the same as JS 
+            //-- Models (Source Mapping), Namespaces, Database Connections (Dapper, Entity Framework), Config
+            //!! Methods, Arguments and Return.   
+            //* , , the same as JS 
 
             // IConfiguration config = new ConfigurationBuilder()
             //     .AddJsonFile("appsettings.json")
             //     .Build();
 
-            
+
             // DataContextDapper dapper = new DataContextDapper(config);
-            
+
             // DataContextEF entityFramework = new DataContextEF(config);
 
             // string sqlCommand = "SELECT GETDATE()";
@@ -310,7 +310,7 @@ namespace CNET.C.NET
 
             //!! Creating instance of Model
             // myComputer.ReleaseDate.ToString("yyyy-MM-dd");
-            
+
             // Computer myComputer = new Computer() {
             //     Motherboard = "Z690",
             //     CPUCores = 4,
@@ -343,7 +343,7 @@ namespace CNET.C.NET
             // + "','" + myComputer.Price
             // + "','" + myComputer.VideoCard
             // + "')";
-            
+
             // File.WriteAllText("log.txt", "\n" + sql + "\n");
 
             // using StreamWriter openFile = new("log.txt", append: true);
@@ -408,7 +408,7 @@ namespace CNET.C.NET
             //     // Convert ReleaseDate to DateTime and then to a string in a format SQL Server understands
             //     computer.ReleaseDate = DateTime.Parse(computer.ReleaseDate, CultureInfo.InvariantCulture).ToString("yyyy-MM-dd HH:mm:ss.fff");
             // }
-                    
+
             //         // Console.Write("\n" + computer.Motherboard + "\n");
             //             string sql = @"INSERT INTO TutorialAppSchema.Computer (
             //             Motherboard,
@@ -447,15 +447,49 @@ namespace CNET.C.NET
 
             // }
 
-            
-             
-        }
-        // static string EscapeSingleQuote(string input)
-        //     {
-        //         string output = input.Replace("'", "''");
+            // static string EscapeSingleQuote(string input)
+            //     {
+            //         string output = input.Replace("'", "''");
 
-        //         return output;
-        //     }
+            //         return output;
+            //     }
+
+            Task firstTask = new Task(() =>
+            {
+                Thread.Sleep(100);
+                Console.WriteLine("Task 1");
+
+            });
+            firstTask.Start(); // Needed when 
+
+            Task secondTask = ConsoleAfterDelayAsync("Task 2", 150);
+
+            ConsoleAfterDelay("Delay", 101);
+
+            Task thirdTask = ConsoleAfterDelayAsync("Task 3", 50);
+
+            await firstTask;
+            Console.WriteLine("After the Task was created");
+            // To change this into async > Void => async Task
+            //!! Can NOT be void/int as a Task needs to be returned.
+            await secondTask;
+            await thirdTask;
+
+        }
+
+        static void ConsoleAfterDelay(string text, int delayTime)
+        {
+            Thread.Sleep(delayTime);
+            Console.WriteLine(text);
+        }
+
+        static async Task ConsoleAfterDelayAsync(string text, int delayTime)
+        {
+            await Task.Delay(delayTime); // Same as Thread.Sleep() but for async
+            Console.WriteLine(text);
+        }
+
+
     }
 }
 
@@ -464,63 +498,63 @@ namespace CNET.C.NET
 
 // Console.WriteLine(sql);
 
-        // // int result = dapper.ExecuteSqlWithRows(sql);
-        // bool result = dapper.ExecuteSql(sql);
+// // int result = dapper.ExecuteSqlWithRows(sql);
+// bool result = dapper.ExecuteSql(sql);
 
-        // // Console.WriteLine(result);
+// // Console.WriteLine(result);
 
-        // string sqlSelect = @"SELECT 
-        //     Computer.ComputerId,
-        //     Computer.Motherboard,
-        //     Computer.CPUCores,
-        //     Computer.HasWifi,
-        //     Computer.HasLTE,
-        //     Computer.ReleaseDate,
-        //     Computer.Price,
-        //     Computer.VideoCard
-        //  FROM TutorialAppSchema.Computer";
+// string sqlSelect = @"SELECT 
+//     Computer.ComputerId,
+//     Computer.Motherboard,
+//     Computer.CPUCores,
+//     Computer.HasWifi,
+//     Computer.HasLTE,
+//     Computer.ReleaseDate,
+//     Computer.Price,
+//     Computer.VideoCard
+//  FROM TutorialAppSchema.Computer";
 
-        //  IEnumerable<Computer> computers = dapper.LoadData<Computer>(sqlSelect);
+//  IEnumerable<Computer> computers = dapper.LoadData<Computer>(sqlSelect);
 
-        // Console.WriteLine("'ComputerId', 'Motherboard', 'CPUCores','HasWifi', 'HasLTE, 'ReleaseDate', 'Price', 'VideoCard'");
+// Console.WriteLine("'ComputerId', 'Motherboard', 'CPUCores','HasWifi', 'HasLTE, 'ReleaseDate', 'Price', 'VideoCard'");
 
-        //  foreach(Computer singleComputer in computers) {
-        //     Console.WriteLine("'" 
-        //         + singleComputer.ComputerId
-        //         + "','"  + singleComputer.Motherboard
-        //         + "','" + singleComputer.CPUCores
-        //         + "','" + singleComputer.HasWifi
-        //         + "','" + singleComputer.HasLTE
-        //         + "','" + singleComputer.ReleaseDate
-        //         + "','" + singleComputer.Price
-        //         + "','" + singleComputer.VideoCard
-        //         + "'");
-        //  }
+//  foreach(Computer singleComputer in computers) {
+//     Console.WriteLine("'" 
+//         + singleComputer.ComputerId
+//         + "','"  + singleComputer.Motherboard
+//         + "','" + singleComputer.CPUCores
+//         + "','" + singleComputer.HasWifi
+//         + "','" + singleComputer.HasLTE
+//         + "','" + singleComputer.ReleaseDate
+//         + "','" + singleComputer.Price
+//         + "','" + singleComputer.VideoCard
+//         + "'");
+//  }
 
-        // IEnumerable<Computer>? computersEF = entityFramework.Computer?.ToList<Computer>();
+// IEnumerable<Computer>? computersEF = entityFramework.Computer?.ToList<Computer>();
 
-        // if (computersEF != null)
-        // {
-        // Console.WriteLine("'ComputerId', 'Motherboard', 'CPUCores','HasWifi', 'HasLTE, 'ReleaseDate', 'Price', 'VideoCard'");
+// if (computersEF != null)
+// {
+// Console.WriteLine("'ComputerId', 'Motherboard', 'CPUCores','HasWifi', 'HasLTE, 'ReleaseDate', 'Price', 'VideoCard'");
 
-        // foreach(Computer singleComputer in computers) {
-        //     Console.WriteLine("'" 
-        //         + singleComputer.ComputerId
-        //         + "','"  + singleComputer.Motherboard
-        //         + "','" + singleComputer.CPUCores
-        //         + "','" + singleComputer.HasWifi
-        //         + "','" + singleComputer.HasLTE
-        //         + "','" + singleComputer.ReleaseDate
-        //         + "','" + singleComputer.Price
-        //         + "','" + singleComputer.VideoCard
-        //         + "'");
-        //  }
-        // }
+// foreach(Computer singleComputer in computers) {
+//     Console.WriteLine("'" 
+//         + singleComputer.ComputerId
+//         + "','"  + singleComputer.Motherboard
+//         + "','" + singleComputer.CPUCores
+//         + "','" + singleComputer.HasWifi
+//         + "','" + singleComputer.HasLTE
+//         + "','" + singleComputer.ReleaseDate
+//         + "','" + singleComputer.Price
+//         + "','" + singleComputer.VideoCard
+//         + "'");
+//  }
+// }
 
-        
 
-        // // Console.WriteLine(myComputer.Motherboard);
-        // // Console.WriteLine(myComputer);
+
+// // Console.WriteLine(myComputer.Motherboard);
+// // Console.WriteLine(myComputer);
 
 
 // UserName: sa
@@ -534,20 +568,20 @@ namespace CNET.C.NET
 // Server=localhost;Database=DotNetCourseDatabase;Trusted_Connection=false;TrustServerCertificate=True;User Id=sa;Password=SQLConnect1;
 
 
-            
 
 
 
 
 
 
-            
-        
-
-            
-            
 
 
 
 
-            
+
+
+
+
+
+
+
