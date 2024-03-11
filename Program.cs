@@ -294,12 +294,12 @@ namespace CNET.C.NET
                 //!! Methods, Arguments and Return.   
                 //* , , the same as JS 
 
-            IConfiguration config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
+            // IConfiguration config = new ConfigurationBuilder()
+            //     .AddJsonFile("appsettings.json")
+            //     .Build();
 
             
-            DataContextDapper dapper = new DataContextDapper(config);
+            // DataContextDapper dapper = new DataContextDapper(config);
             
             // DataContextEF entityFramework = new DataContextEF(config);
 
@@ -351,18 +351,18 @@ namespace CNET.C.NET
 
             // openFile.Close();
 
-            string computersJson = File.ReadAllText("ComputersSnake.json");
+            // string computersJson = File.ReadAllText("ComputersSnake.json");
 
-            Mapper mapper = new Mapper(new MapperConfiguration((cfg) => {
-                cfg.CreateMap<ComputerSnake, Computer>()
-                    .ForMember(destination => destination.ComputerId, options => options.MapFrom(source => source.computer_id))
-                    .ForMember(destination => destination.CPUCores, options => options.MapFrom(source => source.cpu_cores))
-                    .ForMember(destination => destination.HasLTE, options => options.MapFrom(source => source.has_lte))
-                    .ForMember(destination => destination.HasWifi, options => options.MapFrom(source => source.has_wifi))
-                    .ForMember(destination => destination.Motherboard, options => options.MapFrom(source => source.motherboard))
-                    .ForMember(destination => destination.VideoCard, options => options.MapFrom(source => source.video_card))
-                    .ForMember(destination => destination.Price, options => options.MapFrom(source => source.price));
-            }));
+            // Mapper mapper = new Mapper(new MapperConfiguration((cfg) => {
+            //     cfg.CreateMap<ComputerSnake, Computer>()
+            //         .ForMember(destination => destination.ComputerId, options => options.MapFrom(source => source.computer_id))
+            //         .ForMember(destination => destination.CPUCores, options => options.MapFrom(source => source.cpu_cores))
+            //         .ForMember(destination => destination.HasLTE, options => options.MapFrom(source => source.has_lte))
+            //         .ForMember(destination => destination.HasWifi, options => options.MapFrom(source => source.has_wifi))
+            //         .ForMember(destination => destination.Motherboard, options => options.MapFrom(source => source.motherboard))
+            //         .ForMember(destination => destination.VideoCard, options => options.MapFrom(source => source.video_card))
+            //         .ForMember(destination => destination.Price, options => options.MapFrom(source => source.price));
+            // }));
 
             // Console.WriteLine(computersJson);
 
@@ -374,28 +374,28 @@ namespace CNET.C.NET
             // IEnumerable<Computer>? computersNewtonSoft = JsonConvert.DeserializeObject<IEnumerable<Computer>>(computersJson)
             // ;
             //-- AutoMapper.
-            IEnumerable<ComputerSnake>? computersSystem = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<ComputerSnake>>(computersJson);
+            // IEnumerable<ComputerSnake>? computersSystem = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<ComputerSnake>>(computersJson);
 
-            if (computersSystem != null)
-            {
-                IEnumerable<Computer> computerResult = mapper.Map<IEnumerable<Computer>>(computersSystem);
-                Console.WriteLine("Automapper Count: " + computerResult.Count());
-                // foreach (Computer computer in computerResult) 
-                // {
-                //     Console.WriteLine(computer.Motherboard);
-                // }
-            }
+            // if (computersSystem != null)
+            // {
+            //     IEnumerable<Computer> computerResult = mapper.Map<IEnumerable<Computer>>(computersSystem);
+            //     Console.WriteLine("Automapper Count: " + computerResult.Count());
+            //     // foreach (Computer computer in computerResult) 
+            //     // {
+            //     //     Console.WriteLine(computer.Motherboard);
+            //     // }
+            // }
 
-            IEnumerable<Computer>? computersSystemJsonPropertMapping = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<Computer>>(computersJson);
+            // IEnumerable<Computer>? computersSystemJsonPropertMapping = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<Computer>>(computersJson);
 
-            if (computersSystemJsonPropertMapping != null)
-            {
-                Console.WriteLine("JSON Property Count: " + computersSystemJsonPropertMapping.Count());
-                // foreach (Computer computer in computersSystemJsonPropertMapping) 
-                // {
-                //     Console.WriteLine(computer.Motherboard);
-                // }
-            }
+            // if (computersSystemJsonPropertMapping != null)
+            // {
+            //     Console.WriteLine("JSON Property Count: " + computersSystemJsonPropertMapping.Count());
+            //     // foreach (Computer computer in computersSystemJsonPropertMapping) 
+            //     // {
+            //     //     Console.WriteLine(computer.Motherboard);
+            //     // }
+            // }
 
 
             // if (computersNewtonSoft != null) 
@@ -448,13 +448,14 @@ namespace CNET.C.NET
             // }
 
             
+             
         }
-        static string EscapeSingleQuote(string input)
-            {
-                string output = input.Replace("'", "''");
+        // static string EscapeSingleQuote(string input)
+        //     {
+        //         string output = input.Replace("'", "''");
 
-                return output;
-            }
+        //         return output;
+        //     }
     }
 }
 

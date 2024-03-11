@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\CNET\\C.NET\\HelloWorld.csproj": {}
+    "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\CNET\\Hello World\\HelloWorld.csproj": {}
   },
   "projects": {
-    "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\CNET\\C.NET\\HelloWorld.csproj": {
+    "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\CNET\\Hello World\\HelloWorld.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\CNET\\C.NET\\HelloWorld.csproj",
+        "projectUniqueName": "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\CNET\\Hello World\\HelloWorld.csproj",
         "projectName": "HelloWorld",
-        "projectPath": "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\CNET\\C.NET\\HelloWorld.csproj",
+        "projectPath": "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\CNET\\Hello World\\HelloWorld.csproj",
         "packagesPath": "C:\\Users\\bmben\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\CNET\\C.NET\\obj\\",
+        "outputPath": "C:\\Users\\bmben\\Desktop\\Multiverse Zoom\\Projects\\CNET\\Hello World\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\bmben\\AppData\\Roaming\\NuGet\\NuGet.Config"
